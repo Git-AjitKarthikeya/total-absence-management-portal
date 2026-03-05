@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appServiceName": {
+      "type": "string",
+      "defaultValue": "absence-portal-app"
+    },
+    "sqlServerName": {
+      "type": "string",
+      "defaultValue": "absence-sql-server"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2022-03-01",
+      "name": "absence-portal-plan",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "B1",
+        "tier": "Basic"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('appServiceName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": ["absence-portal-plan"],
+      "properties": {
+        "serverFarmId": "absence-portal-plan"
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2022-02-01-preview",
+      "name": "[parameters('sqlServerName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "administratorLogin": "sqladmin",
+        "administratorLoginPassword": "P@ssword1234!"
+      }
+    }
+  ]
+}
+```
+
+4. Click **"Commit changes"** → **"Commit changes"**
+
+---
+
+**Add requirements.txt:**
+
+1. Click **"Add file"** → **"Create new file"**
+2. In the filename box type: `requirements.txt`
+3. Paste this:
+```
+flask==3.0.0
+pyodbc==5.0.1
+pytest==7.4.0
+azure-functions==1.17.0
