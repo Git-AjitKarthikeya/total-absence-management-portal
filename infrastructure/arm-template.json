@@ -50,17 +50,4 @@
 }
 ```
 
-4. Click **"Commit changes"** → **"Commit changes"**
-
 ---
-
-**Add requirements.txt:**
-
-1. Click **"Add file"** → **"Create new file"**
-2. In the filename box type: `requirements.txt`
-3. Paste this:
-```
-flask==3.0.0
-pyodbc==5.0.1
-pytest==7.4.0
-azure-functions==1.17.0
