@@ -1,0 +1,75 @@
+name: Deploy Absence Portal
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest tests/
+
+  deploy-dev:
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Dev
+        run: echo "Deploying to Dev environment"
+
+  deploy-staging:
+    needs: build
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Staging
+        run: echo "Deploying to Staging environment"
+
+  deploy-production:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy to Production
+        run: echo "Deploying to Production environment"
+```
+
+4. Click **"Commit changes"** → **"Commit changes"**
+
+---
+
+## STEP 4 — Add the ARM Template File
+
+1. Click **"Add file"** → **"Create new file"**
+2. In the filename box type: `infrastructure/arm-template.json`
+3. Paste the ARM Template JSON from inside the README above (the big JSON block)
+4. Click **"Commit changes"** → **"Commit changes"**
+
+---
+
+## STEP 5 — Add requirements.txt
+
+1. Click **"Add file"** → **"Create new file"**
+2. In the filename box type: `requirements.txt`
+3. Paste this:
+```
+flask==3.0.0
+pyodbc==5.0.1
+pytest==7.4.0
+azure-functions==1.17.0
