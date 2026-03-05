@@ -48,28 +48,3 @@ jobs:
     steps:
       - name: Deploy to Production
         run: echo "Deploying to Production environment"
-```
-
-4. Click **"Commit changes"** → **"Commit changes"**
-
----
-
-## STEP 4 — Add the ARM Template File
-
-1. Click **"Add file"** → **"Create new file"**
-2. In the filename box type: `infrastructure/arm-template.json`
-3. Paste the ARM Template JSON from inside the README above (the big JSON block)
-4. Click **"Commit changes"** → **"Commit changes"**
-
----
-
-## STEP 5 — Add requirements.txt
-
-1. Click **"Add file"** → **"Create new file"**
-2. In the filename box type: `requirements.txt`
-3. Paste this:
-```
-flask==3.0.0
-pyodbc==5.0.1
-pytest==7.4.0
-azure-functions==1.17.0
